@@ -11,7 +11,7 @@ def shanksSolution(g, p, h):
     """ 
     Uses Shank's Babystep Giantstep Algorithm to calculate the discrete log problem
     *** find x in g^x=h mod p ***
-    Returns solutions in the form of congruency class x mod (p-1)
+    Returns solutions in the form of congruence class x mod (p-1)
     """
     n = math.ceil(math.sqrt(p - 1))
     babyList = babyStep(g, p, n)
@@ -20,8 +20,11 @@ def shanksSolution(g, p, h):
     for j in range(0, n + 1):
         giant = (h * pow(base, j, p)) % p
         if giant in babyList:
-            return babyList[giant] + j * n
+            x = babyList[giant] + j * n
+            print(f'{g}^{x}={h} mod {p}')
+            return x
     # no solution
+    print('No solution found.')
     return None
 
 def testShanksSolution():
@@ -29,6 +32,7 @@ def testShanksSolution():
     assert(shanksSolution(11, 137, 1226) == 31)
     assert(shanksSolution(113, 137, 1226) == 122)
     assert(shanksSolution(17777, 1823, 4) == 560)
+    assert(shanksSolution(17777, 7789, 4) == 493)
     print("All tests passed; the algorithm seems to be implemented correctly.")
 
 testShanksSolution()
